@@ -278,6 +278,19 @@ class Workbox extends WorkboxEventTarget {
   }
 
   /**
+   * Sends { type: 'SKIP_WAITING' } to the waiting service worker if there is one
+   */
+  async messageSkipWaiting() {
+    if (!this._registration || !this._registration.waiting) {
+      if (process.env.NODE_ENV !== 'production') {
+        logger.warn('messageSkipWaiting called without a waiting service worker.');
+      }
+      return Promise.resolve();
+    }
+    return messageSW(this._registration?.waiting, { type: 'SKIP_WAITING' });
+  }
+
+  /**
    * Checks for a service worker already controlling the page and returns
    * it if its script URL matches.
    *

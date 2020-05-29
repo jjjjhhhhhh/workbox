@@ -943,7 +943,7 @@ describe(`[workbox-window] Workbox`, function() {
         const wb = new Workbox(scriptURL);
         const reg = await wb.register();
 
-        wb.messageSW({type: 'SKIP_WAITING'});
+        wb.messageSkipWaiting();
         await wb.controlling;
 
         // Update the SW after so an update check triggers an update.
